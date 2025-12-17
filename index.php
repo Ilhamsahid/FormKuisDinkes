@@ -1,8 +1,9 @@
 <?php
+include 'configs/database.php';
 require_once __DIR__.'/data/Pertanyaan.php';
 
-$question = new Pertanyaan();
-$questions = $question->getQuestion();
+$question = new Pertanyaan($conn);
+$questions = $question->getAll();
 ?>
 
 <!DOCTYPE html>
