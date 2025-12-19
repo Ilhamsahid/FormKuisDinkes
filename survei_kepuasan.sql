@@ -40,19 +40,18 @@ CREATE TABLE IF NOT EXISTS `tb_pertanyaan` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
--- Dumping structure for table survei_kepuasan.tb_jawaban
-CREATE TABLE IF NOT EXISTS `tb_jawaban` (
+CREATE TABLE `tb_jawaban` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_pertanyaan` int NOT NULL DEFAULT '0',
   `id_instansi` int NOT NULL DEFAULT '0',
-  `jawaban` varchar(100) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0',
+  `jawaban` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '0',
+  `nilai` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK__tb_pertanyaan` (`id_pertanyaan`),
   KEY `FK__tb_instansi` (`id_instansi`),
   CONSTRAINT `FK__tb_instansi` FOREIGN KEY (`id_instansi`) REFERENCES `tb_instansi` (`id`),
   CONSTRAINT `FK__tb_pertanyaan` FOREIGN KEY (`id_pertanyaan`) REFERENCES `tb_pertanyaan` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=246 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
 INSERT INTO `tb_pertanyaan` (`id`, `pertanyaan`, `tipe`, `jawaban`) VALUES
 (1, 'Apa jenis pelayanan yang pernah Saudara urusi?', 'SelectOne', 'Pelayanan Rekomendasi Ijin Praktik/Kerja Tenaga Kesehatan:Pelayanan Rekomendasi Ijin Fasilitas Kesehatan:Pelayanan Konsultasi PIRT:Pelayanan Fogging'),
