@@ -2,11 +2,10 @@
 
 $host = 'localhost';
 $user = 'root';
-$pass = 'root';
+$pass = '';
 $db   = 'survei_kepuasan';
-$port = 6606; //custom port
 
-$conn = new mysqli($host, $user, $pass, $db, $port);
+$conn = new mysqli($host, $user, $pass, $db);
 
 if ($conn->connect_error) {
     die('Koneksi gagal: ' . $conn->connect_error);
