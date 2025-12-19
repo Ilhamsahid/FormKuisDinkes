@@ -38,7 +38,7 @@ foreach ($questions as $index => $question) {
 // Membuat flash message
 $_SESSION['flash'] = [
     'type' => 'success',
-    'message' => 'Kuis selesai terimakasih sudah menggunakan kuis ini',
+    'message' => 'Kuis selesai terimakasih sudah menyelesaikan kuis ini',
 ];
 
 header("Location: ../index.php");

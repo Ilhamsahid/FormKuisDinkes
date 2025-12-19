@@ -51,7 +51,7 @@ CREATE TABLE `tb_jawaban` (
   KEY `FK__tb_instansi` (`id_instansi`),
   CONSTRAINT `FK__tb_instansi` FOREIGN KEY (`id_instansi`) REFERENCES `tb_instansi` (`id`),
   CONSTRAINT `FK__tb_pertanyaan` FOREIGN KEY (`id_pertanyaan`) REFERENCES `tb_pertanyaan` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=246 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+) ENGINE=InnoDB AUTO_INCREMENT=246 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `tb_pertanyaan` (`id`, `pertanyaan`, `tipe`, `jawaban`) VALUES
 (1, 'Apa jenis pelayanan yang pernah Saudara urusi?', 'SelectOne', 'Pelayanan Rekomendasi Ijin Praktik/Kerja Tenaga Kesehatan:Pelayanan Rekomendasi Ijin Fasilitas Kesehatan:Pelayanan Konsultasi PIRT:Pelayanan Fogging'),
