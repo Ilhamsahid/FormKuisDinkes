@@ -4,6 +4,10 @@ namespace app\controllers;
 class AdminController {
     public static function dashboard()
     {
+        $nav = getView('components.admin.navbar');
+        $sidebar = getView('components.admin.sidebar');
+        $content = getView('admin.dashboard');
+
         include __DIR__ . '/../view/layouts/admin.php';
     }
 
