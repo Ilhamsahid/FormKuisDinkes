@@ -16,19 +16,17 @@
 
         <!-- Main Content -->
         <main class="flex-1 overflow-y-auto lg:ml-64">
+            <?= $header ?>
             <?= $content ?>
         </main>
+
+        <?= $modal ?>
+        <?php if (isset($_SESSION['flash'])): ?>
+            <?= getView('components.public.modal-notification') ?>
+            <?php unset($_SESSION['flash']); ?>
+        <?php endif; ?>
     </div>
 
-    <script>
-        // Toggle Sidebar
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-
-            sidebar.classList.toggle('-translate-x-full');
-            overlay.classList.toggle('hidden');
-        }
-    </script>
+    <script src="/scripts/admin.js"></script>
 </body>
 </html>

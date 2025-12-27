@@ -9,7 +9,7 @@
                 <h1 class="text-white text-sm sm:text-lg font-semibold">E-SKM Survei Kepuasan Masyarakat</h1>
             </div>
             <?php if(isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                <a href="/admin" class="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer">
+                <a href="/admin/dashboard" class="w-10 h-10 bg-white rounded-full flex items-center justify-center cursor-pointer">
                     <span class="text-green-700 text-sm font-bold">AD</span >
                 </a>
             <?php else: ?>

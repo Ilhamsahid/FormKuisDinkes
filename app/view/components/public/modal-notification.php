@@ -1,7 +1,7 @@
 
     <div
         id="flashModal"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-slate-500/70 p-4 backdrop-blur-sm">
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/20 p-4 backdrop-blur-sm">
 
         <div class="w-full max-w-md rounded-2xl bg-white p-6 sm:p-8 text-center shadow-2xl transform transition-all">
 

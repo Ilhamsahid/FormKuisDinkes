@@ -6,26 +6,8 @@ $rataKepuasan = 4.2;
 $respondenBulanIni = 87;
 ?>
 
-<!-- Top Bar -->
-<header class="bg-white shadow-sm sticky top-0 z-30">
-    <div class="flex items-center justify-between px-4 sm:px-6 lg:px-8 py-4">
-        <div class="flex items-center gap-4">
-            <button onclick="toggleSidebar()" class="lg:hidden text-gray-600 hover:text-gray-900">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                </svg>
-            </button>
-            <div>
-                <h2 class="text-xl sm:text-2xl font-bold text-gray-800">Dashboard</h2>
-                <p class="text-xs sm:text-sm text-gray-600">Selamat datang di panel admin E-SKM</p>
-            </div>
-        </div>
-
-    </div>
-</header>
-
 <!-- Dashboard Content -->
-<div class="p-4 sm:p-6 lg:p-8">
+<div id="dashboardPage" class="page-content hidden p-4 sm:p-6 lg:p-8">
 
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">

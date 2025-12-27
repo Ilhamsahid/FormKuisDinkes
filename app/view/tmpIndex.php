@@ -1,17 +1,23 @@
 <?php
 session_start();
-// Simulasi data - nanti bisa diganti dengan query database
-$totalResponden = 1250;
-$totalPertanyaan = 12;
-$rataKepuasan = 4.2;
-$respondenBulanIni = 87;
 
-// Simulasi data users
-$users = [
-    ['id' => 1, 'name' => 'Admin Utama', 'email' => 'admin@eskm.com', 'role' => 'Super Admin', 'status' => 'Aktif', 'created' => '15 Jan 2024'],
-    ['id' => 2, 'name' => 'Operator 1', 'email' => 'operator1@eskm.com', 'role' => 'Operator', 'status' => 'Aktif', 'created' => '20 Feb 2024'],
-    ['id' => 3, 'name' => 'Operator 2', 'email' => 'operator2@eskm.com', 'role' => 'Operator', 'status' => 'Aktif', 'created' => '15 Mar 2024'],
-    ['id' => 4, 'name' => 'Viewer 1', 'email' => 'viewer@eskm.com', 'role' => 'Viewer', 'status' => 'Nonaktif', 'created' => '10 Apr 2024'],
+// Simulasi data pertanyaan
+$questions = [
+    [
+        'id' => 1,
+        'question' => 'Kemudahan akses informasi layanan Dinas Kesehatan Pengendalian Penduduk dan KB Kota Probolinggo. (informasi layanan tersedia di berbagai media elektronik dan nonelektronik)',
+        'answers' => ['Tidak Mudah', 'Kurang Mudah', 'Mudah', 'Sangat Mudah']
+    ],
+    [
+        'id' => 2,
+        'question' => 'Kesesuaian persyaratan pelayanan dengan jenis pelayanannya',
+        'answers' => ['Tidak Sesuai', 'Kurang Sesuai', 'Sesuai', 'Sangat Sesuai']
+    ],
+    [
+        'id' => 3,
+        'question' => 'Bagaimana pendapat Saudara tentang kemudahan Sistem, mekanisme dan prosedur pelayanan',
+        'answers' => ['Tidak Mudah', 'Kurang Mudah', 'Mudah', 'Sangat Mudah']
+    ],
 ];
 ?>
 
@@ -20,7 +26,7 @@ $users = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - E-SKM</title>
+    <title>Pertanyaan Survey - E-SKM</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body class="bg-gray-50">
@@ -36,7 +42,7 @@ $users = [
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
                             <svg class="w-6 h-6 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                             </svg>
                         </div>
                         <div>
@@ -53,32 +59,11 @@ $users = [
 
                 <!-- Navigation -->
                 <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-                    <a onclick="navigateTo('dashboard')" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg transition-all hover:bg-green-600 cursor-pointer" data-page="dashboard">
-                        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                        </svg>
-                        <span class="font-medium">Dashboard</span>
-                    </a>
-
-                    <a onclick="navigateTo('users')" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg transition-all hover:bg-green-600 cursor-pointer" data-page="users">
-                        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-                        </svg>
-                        <span class="font-medium">Manajemen User</span>
-                    </a>
-
-                    <a onclick="navigateTo('questions')" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg transition-all hover:bg-green-600 cursor-pointer" data-page="questions">
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 bg-green-900 rounded-lg transition-all">
                         <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
                         <span class="font-medium">Pertanyaan Survei</span>
-                    </a>
-
-                    <a onclick="navigateTo('results')" class="nav-link flex items-center gap-3 px-4 py-3 rounded-lg transition-all hover:bg-green-600 cursor-pointer" data-page="results">
-                        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                        </svg>
-                        <span class="font-medium">Hasil Kuisioner</span>
                     </a>
                 </nav>
 
@@ -103,7 +88,7 @@ $users = [
         </aside>
 
         <!-- Overlay for mobile -->
-        <div id="overlay" class="fixed inset-0 backdrop-blur-sm z-40 lg:hidden hidden" onclick="toggleSidebar()"></div>
+        <div id="overlay" class="fixed inset-0 backdrop-blur-sm bg-black/20 z-40 hidden lg:hidden" onclick="toggleSidebar()"></div>
 
         <!-- Main Content -->
         <main class="flex-1 overflow-y-auto lg:ml-64">
@@ -118,8 +103,8 @@ $users = [
                             </svg>
                         </button>
                         <div>
-                            <h2 id="pageTitle" class="text-xl sm:text-2xl font-bold text-gray-800">Dashboard</h2>
-                            <p id="pageSubtitle" class="text-xs sm:text-sm text-gray-600">Selamat datang di panel admin E-SKM</p>
+                            <h2 class="text-xl sm:text-2xl font-bold text-gray-800">Pertanyaan Survei</h2>
+                            <p class="text-xs sm:text-sm text-gray-600">Kelola pertanyaan kuisioner kepuasan masyarakat</p>
                         </div>
                     </div>
 
@@ -134,430 +119,225 @@ $users = [
                 </div>
             </header>
 
-            <!-- Page Content Container -->
-            <div id="pageContent" class="p-4 sm:p-6 lg:p-8">
+            <!-- Content -->
+            <div class="p-4 sm:p-6 lg:p-8">
 
-                <!-- Dashboard Page -->
-                <div id="dashboardPage" class="page-content">
-                    <!-- Stats Cards -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
-
-                        <!-- Total Responden -->
-                        <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-transform">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="w-12 h-12 bg-white bg-opacity-30 rounded-lg flex items-center justify-center">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-                                    </svg>
-                                </div>
-                                <span class="text-xs font-medium bg-white bg-opacity-30 px-3 py-1 rounded-full">+12.5%</span>
-                            </div>
-                            <h3 class="text-3xl font-bold mb-1"><?= number_format($totalResponden) ?></h3>
-                            <p class="text-green-100 text-sm">Total Responden</p>
-                        </div>
-
-                        <!-- Total Pertanyaan -->
-                        <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-transform">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="w-12 h-12 bg-white bg-opacity-30 rounded-lg flex items-center justify-center">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                    </svg>
-                                </div>
-                            </div>
-                            <h3 class="text-3xl font-bold mb-1"><?= $totalPertanyaan ?></h3>
-                            <p class="text-blue-100 text-sm">Total Pertanyaan</p>
-                        </div>
-
-                        <!-- Rata-rata Kepuasan -->
-                        <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-transform">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="w-12 h-12 bg-white bg-opacity-30 rounded-lg flex items-center justify-center">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>
-                                    </svg>
-                                </div>
-                                <span class="text-xs font-medium bg-white bg-opacity-30 px-3 py-1 rounded-full">Sangat Baik</span>
-                            </div>
-                            <h3 class="text-3xl font-bold mb-1"><?= number_format($rataKepuasan, 1) ?>/5.0</h3>
-                            <p class="text-purple-100 text-sm">Rata-rata Kepuasan</p>
-                        </div>
-
-                        <!-- Responden Bulan Ini -->
-                        <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-transform">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="w-12 h-12 bg-white bg-opacity-30 rounded-lg flex items-center justify-center">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                    </svg>
-                                </div>
-                                <span class="text-xs font-medium bg-white bg-opacity-30 px-3 py-1 rounded-full">Desember</span>
-                            </div>
-                            <h3 class="text-3xl font-bold mb-1"><?= $respondenBulanIni ?></h3>
-                            <p class="text-orange-100 text-sm">Responden Bulan Ini</p>
+                <!-- Action Bar -->
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div class="flex-1">
+                        <div class="relative">
+                            <input type="text" placeholder="Cari pertanyaan..." class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-500/30 outline-none">
+                            <svg class="w-5 h-5 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
                         </div>
                     </div>
-
-                    <!-- Quick Stats -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-
-                        <!-- Tingkat Kepuasan -->
-                        <div class="bg-white rounded-xl shadow-md p-6">
-                            <div class="flex items-center gap-4 mb-4">
-                                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="text-2xl font-bold text-gray-800">89.2%</h4>
-                                    <p class="text-sm text-gray-600">Tingkat Kepuasan</p>
-                                </div>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-gray-600">Sangat Baik</span>
-                                    <span class="font-semibold text-green-600">456</span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-gray-600">Baik</span>
-                                    <span class="font-semibold text-blue-600">342</span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-gray-600">Cukup</span>
-                                    <span class="font-semibold text-yellow-600">168</span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-gray-600">Buruk</span>
-                                    <span class="font-semibold text-red-600">45</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Demografi -->
-                        <div class="bg-white rounded-xl shadow-md p-6">
-                            <div class="flex items-center gap-4 mb-4">
-                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="text-2xl font-bold text-gray-800">52%</h4>
-                                    <p class="text-sm text-gray-600">Laki-laki</p>
-                                </div>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-gray-600">Usia 17-25</span>
-                                    <span class="font-semibold text-gray-800">23%</span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-gray-600">Usia 26-40</span>
-                                    <span class="font-semibold text-gray-800">45%</span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-gray-600">Usia 41-60</span>
-                                    <span class="font-semibold text-gray-800">28%</span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-gray-600">Usia 60+</span>
-                                    <span class="font-semibold text-gray-800">4%</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pendidikan -->
-                        <div class="bg-white rounded-xl shadow-md p-6">
-                            <div class="flex items-center gap-4 mb-4">
-                                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="text-2xl font-bold text-gray-800">S1/D4</h4>
-                                    <p class="text-sm text-gray-600">Terbanyak</p>
-                                </div>
-                            </div>
-                            <div class="space-y-2">
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-gray-600">S1/D4</span>
-                                    <span class="font-semibold text-gray-800">42%</span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-gray-600">SMA/SMK</span>
-                                    <span class="font-semibold text-gray-800">31%</span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-gray-600">S2</span>
-                                    <span class="font-semibold text-gray-800">18%</span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-gray-600">Lainnya</span>
-                                    <span class="font-semibold text-gray-800">9%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Recent Responses -->
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                        <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-                            <h3 class="text-lg font-bold text-gray-800 flex items-center gap-2">
-                                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                </svg>
-                                Responden Terbaru
-                            </h3>
-                            <button class="text-sm text-green-600 hover:text-green-700 font-medium flex items-center gap-1">
-                                Lihat Semua
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Nama/Instansi</th>
-                                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Umur</th>
-                                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Pendidikan</th>
-                                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Tanggal</th>
-                                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Skor</th>
-                                        <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-200">
-                                    <?php
-                                    $recentData = [
-                                        ['name' => 'SMKN 1 Probolinggo', 'age' => 35, 'edu' => 'S1', 'date' => '23 Des 2024', 'score' => 4.5],
-                                        ['name' => 'Dinas Kesehatan', 'age' => 42, 'edu' => 'S2', 'date' => '23 Des 2024', 'score' => 4.8],
-                                        ['name' => 'PT Maju Jaya', 'age' => 28, 'edu' => 'S1', 'date' => '22 Des 2024', 'score' => 4.2],
-                                        ['name' => 'RSUD Kota', 'age' => 38, 'edu' => 'S1', 'date' => '22 Des 2024', 'score' => 4.6],
-                                        ['name' => 'Bank BRI', 'age' => 31, 'edu' => 'D3', 'date' => '21 Des 2024', 'score' => 4.3],
-                                    ];
-                                    foreach ($recentData as $data):
-                                    ?>
-                                    <tr class="hover:bg-gray-50 transition">
-                                        <td class="px-6 py-4 text-sm text-gray-800 font-medium"><?= $data['name'] ?></td>
-                                        <td class="px-6 py-4 text-sm text-gray-600"><?= $data['age'] ?> tahun</td>
-                                        <td class="px-6 py-4">
-                                            <span class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-700 rounded-full"><?= $data['edu'] ?></span>
-                                        </td>
-                                        <td class="px-6 py-4 text-sm text-gray-600"><?= $data['date'] ?></td>
-                                        <td class="px-6 py-4">
-                                            <div class="flex items-center gap-1">
-                                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                                </svg>
-                                                <span class="text-sm font-semibold text-gray-700"><?= $data['score'] ?></span>
-                                            </div>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <button class="text-green-600 hover:text-green-700 text-sm font-medium flex items-center gap-1">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                                </svg>
-                                                Detail
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <button onclick="openQuestionModal('add')" class="bg-green-600 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-green-700 transition flex items-center justify-center gap-2 shadow-md">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                        </svg>
+                        Tambah Pertanyaan
+                    </button>
                 </div>
 
-                <!-- Users Management Page -->
-                <div id="usersPage" class="page-content hidden">
-                    <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                        <div class="flex-1">
-                            <div class="relative">
-                                <input type="text" placeholder="Cari user..." class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-500/30 outline-none">
-                                <svg class="w-5 h-5 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                <!-- Desktop Table -->
+                <div class="hidden lg:block bg-white rounded-xl shadow-md overflow-hidden">
+                    <table class="w-full">
+                        <thead class="bg-green-700 text-white">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-sm font-semibold w-16">No</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Pertanyaan</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Jawaban A</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Jawaban B</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Jawaban C</th>
+                                <th class="px-6 py-4 text-left text-sm font-semibold">Jawaban D</th>
+                                <th class="px-6 py-4 text-center text-sm font-semibold w-32">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <?php foreach ($questions as $index => $q): ?>
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4 text-sm text-gray-700 font-medium"><?= $index + 1 ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-800"><?= $q['question'] ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-600"><?= $q['answers'][0] ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-600"><?= $q['answers'][1] ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-600"><?= $q['answers'][2] ?></td>
+                                <td class="px-6 py-4 text-sm text-gray-600"><?= $q['answers'][3] ?></td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button onclick="openQuestionModal('edit', <?= $q['id'] ?>)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Edit">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                            </svg>
+                                        </button>
+                                        <button onclick="confirmDelete(<?= $q['id'] ?>, '<?= addslashes(substr($q['question'], 0, 50)) ?>...')" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Mobile Cards -->
+                <div class="lg:hidden space-y-4">
+                    <?php foreach ($questions as $index => $q): ?>
+                    <div class="bg-white rounded-xl shadow-md p-4">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex items-start gap-3 flex-1">
+                                <div class="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold">
+                                    <?= $index + 1 ?>
+                                </div>
+                                <p class="text-sm text-gray-800 font-medium leading-relaxed"><?= $q['question'] ?></p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2 mb-3 pl-11">
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="bg-green-50 border border-green-200 rounded-lg p-2">
+                                    <p class="text-xs font-semibold text-green-700 mb-1">A</p>
+                                    <p class="text-xs text-gray-700"><?= $q['answers'][0] ?></p>
+                                </div>
+                                <div class="bg-blue-50 border border-blue-200 rounded-lg p-2">
+                                    <p class="text-xs font-semibold text-blue-700 mb-1">B</p>
+                                    <p class="text-xs text-gray-700"><?= $q['answers'][1] ?></p>
+                                </div>
+                                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-2">
+                                    <p class="text-xs font-semibold text-yellow-700 mb-1">C</p>
+                                    <p class="text-xs text-gray-700"><?= $q['answers'][2] ?></p>
+                                </div>
+                                <div class="bg-red-50 border border-red-200 rounded-lg p-2">
+                                    <p class="text-xs font-semibold text-red-700 mb-1">D</p>
+                                    <p class="text-xs text-gray-700"><?= $q['answers'][3] ?></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-2 pt-3 border-t border-gray-200">
+                            <button onclick="openQuestionModal('edit', <?= $q['id'] ?>)" class="flex-1 bg-blue-50 text-blue-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-100 transition flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                 </svg>
-                            </div>
+                                Edit
+                            </button>
+                            <button onclick="confirmDelete(<?= $q['id'] ?>, '<?= addslashes(substr($q['question'], 0, 30)) ?>...')" class="flex-1 bg-red-50 text-red-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-100 transition flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                </svg>
+                                Hapus
+                            </button>
                         </div>
-                        <button onclick="openUserModal('add')" class="bg-green-600 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-green-700 transition flex items-center justify-center gap-2 shadow-md">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                            </svg>
-                            Tambah User
-                        </button>
                     </div>
-
-                    <!-- Desktop Table -->
-                    <div class="hidden md:block bg-white rounded-xl shadow-md overflow-hidden">
-                        <table class="w-full">
-                            <thead class="bg-green-700 text-white">
-                                <tr>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold">No</th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold">Nama</th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold">Email</th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold">Role</th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold">Status</th>
-                                    <th class="px-6 py-4 text-left text-sm font-semibold">Dibuat</th>
-                                    <th class="px-6 py-4 text-center text-sm font-semibold">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200">
-                                <?php foreach ($users as $index => $user): ?>
-                                <tr class="hover:bg-gray-50 transition">
-                                    <td class="px-6 py-4 text-sm text-gray-700"><?= $index + 1 ?></td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center gap-3">
-                                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                                                <span class="text-sm font-bold text-green-700"><?= substr($user['name'], 0, 2) ?></span>
-                                            </div>
-                                            <span class="text-sm font-medium text-gray-800"><?= $user['name'] ?></span>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-gray-600"><?= $user['email'] ?></td>
-                                    <td class="px-6 py-4">
-                                        <span class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-700 rounded-full"><?= $user['role'] ?></span>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span class="px-3 py-1 text-xs font-medium <?= $user['status'] == 'Aktif' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' ?> rounded-full">
-                                            <?= $user['status'] ?>
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-gray-600"><?= $user['created'] ?></td>
-                                    <td class="px-6 py-4">
-                                        <div class="flex items-center justify-center gap-2">
-                                            <button onclick="openUserModal('edit', <?= $user['id'] ?>)" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Edit">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                                </svg>
-                                            </button>
-                                            <button onclick="confirmDelete(<?= $user['id'] ?>, '<?= $user['name'] ?>')" class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Mobile Cards -->
-                    <div class="md:hidden space-y-4">
-                        <?php foreach ($users as $index => $user): ?>
-                        <div class="bg-white rounded-xl shadow-md p-4">
-                            <div class="flex items-start justify-between mb-3">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                        <span class="text-sm font-bold text-green-700"><?= substr($user['name'], 0, 2) ?></span>
-                                    </div>
-                                    <div>
-                                        <h3 class="font-semibold text-gray-800"><?= $user['name'] ?></h3>
-                                        <p class="text-xs text-gray-600"><?= $user['email'] ?></p>
-                                    </div>
-                                </div>
-                                <span class="px-2 py-1 text-xs font-medium <?= $user['status'] == 'Aktif' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' ?> rounded-full">
-                                    <?= $user['status'] ?>
-                                </span>
-                            </div>
-
-                            <div class="space-y-2 mb-3">
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-gray-600">Role:</span>
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded-full font-medium"><?= $user['role'] ?></span>
-                                </div>
-                                <div class="flex items-center justify-between text-xs">
-                                    <span class="text-gray-600">Dibuat:</span>
-                                    <span class="font-medium text-gray-800"><?= $user['created'] ?></span>
-                                </div>
-                            </div>
-
-                            <div class="flex gap-2 pt-3 border-t border-gray-200">
-                                <button onclick="openUserModal('edit', <?= $user['id'] ?>)" class="flex-1 bg-blue-50 text-blue-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-100 transition flex items-center justify-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                                    </svg>
-                                    Edit
-                                </button>
-                                <button onclick="confirmDelete(<?= $user['id'] ?>, '<?= $user['name'] ?>')" class="flex-1 bg-red-50 text-red-600 px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-100 transition flex items-center justify-center gap-2">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
-                                    </svg>
-                                    Hapus
-                                </button>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
 
             </div>
         </main>
     </div>
 
-    <!-- User Modal (Add/Edit) -->
-    <div id="userModal" class="fixed inset-0 backdrop-blur-sm bg-black/20 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md transform transition-all">
-            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-                <h3 id="modalTitle" class="text-lg font-bold text-gray-800">Tambah User</h3>
-                <button onclick="closeUserModal()" class="text-gray-400 hover:text-gray-600 transition">
+    <!-- Question Modal (Add/Edit) - Google Form Style -->
+    <div id="questionModal" class="fixed inset-0 backdrop-blur-sm bg-black/20 z-50 hidden items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl my-8 transform transition-all">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-green-700 rounded-t-xl">
+                <h3 id="modalTitle" class="text-lg font-bold text-white">Tambah Pertanyaan</h3>
+                <button onclick="closeQuestionModal()" class="text-white hover:bg-green-600 p-2 rounded-lg transition">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                     </svg>
                 </button>
             </div>
 
-            <form class="p-6 space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
-                    <input type="text" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-500/30 outline-none" placeholder="Masukkan nama lengkap">
+            <form class="p-6 space-y-6">
+                <!-- Question Input - Google Form Style -->
+                <div class="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-green-500 transition">
+                    <label class="block text-sm font-medium text-gray-700 mb-3">
+                        <span class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            Pertanyaan
+                        </span>
+                    </label>
+                    <textarea
+                        rows="3"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-500/30 outline-none resize-none"
+                        placeholder="Masukkan pertanyaan survei..."
+                    ></textarea>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                    <input type="email" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-500/30 outline-none" placeholder="contoh@email.com">
-                </div>
+                <!-- Answers Section - Google Form Style -->
+                <div class="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-green-500 transition">
+                    <label class="block text-sm font-medium text-gray-700 mb-4">
+                        <span class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                            </svg>
+                            Pilihan Jawaban
+                        </span>
+                    </label>
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
-                    <input type="password" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-500/30 outline-none" placeholder="Minimal 6 karakter">
-                </div>
+                    <div class="space-y-4">
+                        <!-- Answer A -->
+                        <div class="flex items-center gap-3">
+                            <div class="flex items-center justify-center w-10 h-10 bg-green-100 text-green-700 rounded-lg font-bold flex-shrink-0">
+                                A
+                            </div>
+                            <input
+                                type="text"
+                                class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-500/30 outline-none"
+                                placeholder="Contoh: Tidak Mudah"
+                            >
+                        </div>
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Role</label>
-                    <select class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-500/30 outline-none">
-                        <option value="">Pilih Role</option>
-                        <option value="super_admin">Super Admin</option>
-                        <option value="operator">Operator</option>
-                        <option value="viewer">Viewer</option>
-                    </select>
-                </div>
+                        <!-- Answer B -->
+                        <div class="flex items-center gap-3">
+                            <div class="flex items-center justify-center w-10 h-10 bg-blue-100 text-blue-700 rounded-lg font-bold flex-shrink-0">
+                                B
+                            </div>
+                            <input
+                                type="text"
+                                class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-500/30 outline-none"
+                                placeholder="Contoh: Kurang Mudah"
+                            >
+                        </div>
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                    <div class="flex gap-4">
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="radio" name="status" value="aktif" class="w-4 h-4 text-green-600 focus:ring-green-500" checked>
-                            <span class="text-sm text-gray-700">Aktif</span>
-                        </label>
-                        <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="radio" name="status" value="nonaktif" class="w-4 h-4 text-red-600 focus:ring-red-500">
-                            <span class="text-sm text-gray-700">Nonaktif</span>
-                        </label>
+                        <!-- Answer C -->
+                        <div class="flex items-center gap-3">
+                            <div class="flex items-center justify-center w-10 h-10 bg-yellow-100 text-yellow-700 rounded-lg font-bold flex-shrink-0">
+                                C
+                            </div>
+                            <input
+                                type="text"
+                                class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-500/30 outline-none"
+                                placeholder="Contoh: Mudah"
+                            >
+                        </div>
+
+                        <!-- Answer D -->
+                        <div class="flex items-center gap-3">
+                            <div class="flex items-center justify-center w-10 h-10 bg-red-100 text-red-700 rounded-lg font-bold flex-shrink-0">
+                                D
+                            </div>
+                            <input
+                                type="text"
+                                class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:border-green-500 focus:ring-2 focus:ring-green-500/30 outline-none"
+                                placeholder="Contoh: Sangat Mudah"
+                            >
+                        </div>
                     </div>
                 </div>
 
+                <!-- Action Buttons -->
                 <div class="flex gap-3 pt-4">
-                    <button type="button" onclick="closeUserModal()" class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition">
+                    <button type="button" onclick="closeQuestionModal()" class="flex-1 px-4 py-3 border-2 border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition">
                         Batal
                     </button>
-                    <button type="submit" class="flex-1 px-4 py-2.5 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition">
-                        Simpan
+                    <button type="submit" class="flex-1 px-4 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition shadow-md">
+                        Simpan Pertanyaan
                     </button>
                 </div>
             </form>
@@ -574,13 +354,13 @@ $users = [
                     </svg>
                 </div>
                 <h3 class="text-lg font-bold text-gray-800 mb-2">Konfirmasi Hapus</h3>
-                <p class="text-sm text-gray-600 mb-6">Apakah Anda yakin ingin menghapus user <span id="deleteUserName" class="font-semibold"></span>?</p>
+                <p class="text-sm text-gray-600 mb-6">Apakah Anda yakin ingin menghapus pertanyaan: <br><span id="deleteQuestionText" class="font-semibold mt-2 block"></span></p>
 
                 <div class="flex gap-3">
                     <button onclick="closeDeleteModal()" class="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition">
                         Batal
                     </button>
-                    <button onclick="deleteUser()" class="flex-1 px-4 py-2.5 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition">
+                    <button onclick="deleteQuestion()" class="flex-1 px-4 py-2.5 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition">
                         Hapus
                     </button>
                 </div>
@@ -589,8 +369,15 @@ $users = [
     </div>
 
     <script>
-        let currentPage = 'dashboard';
-        let deleteUserId = null;
+        let deleteQuestionId = null;
+
+        // Ensure sidebar is closed on mobile when page loads
+        window.addEventListener('load', function() {
+            if (window.innerWidth < 1024) {
+                document.getElementById('sidebar').classList.add('-translate-x-full');
+                document.getElementById('overlay').classList.add('hidden');
+            }
+        });
 
         // Toggle Sidebar
         function toggleSidebar() {
@@ -601,93 +388,47 @@ $users = [
             overlay.classList.toggle('hidden');
         }
 
-        // Navigate between pages (SPA style - no reload)
-        function navigateTo(page) {
-            // Hide all pages
-            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
-
-            // Remove active state from all nav links
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('bg-green-900');
-            });
-
-            // Show selected page
-            document.getElementById(page + 'Page').classList.remove('hidden');
-
-            // Add active state to current nav link
-            document.querySelector(`[data-page="${page}"]`).classList.add('bg-green-900');
-
-            // Update page title
-            const titles = {
-                'dashboard': { title: 'Dashboard', subtitle: 'Selamat datang di panel admin E-SKM' },
-                'users': { title: 'Manajemen User', subtitle: 'Kelola data pengguna sistem' },
-                'questions': { title: 'Pertanyaan Survei', subtitle: 'Kelola pertanyaan kuisioner' },
-                'results': { title: 'Hasil Kuisioner', subtitle: 'Lihat dan analisis hasil survei' }
-            };
-
-            document.getElementById('pageTitle').textContent = titles[page].title;
-            document.getElementById('pageSubtitle').textContent = titles[page].subtitle;
-
-            currentPage = page;
-
-            // Close sidebar on mobile after navigation
-            if (window.innerWidth < 1024) {
-                toggleSidebar();
-            }
-        }
-
-        // User Modal Functions
-        function openUserModal(mode, userId = null) {
-            const modal = document.getElementById('userModal');
+        // Question Modal Functions
+        function openQuestionModal(mode, questionId = null) {
+            const modal = document.getElementById('questionModal');
             const modalTitle = document.getElementById('modalTitle');
 
             if (mode === 'add') {
-                modalTitle.textContent = 'Tambah User';
+                modalTitle.textContent = 'Tambah Pertanyaan';
             } else {
-                modalTitle.textContent = 'Edit User';
-                // Load user data here
+                modalTitle.textContent = 'Edit Pertanyaan';
+                // Load question data here
             }
 
             modal.classList.remove('hidden');
+            modal.classList.add('flex');
         }
 
-        function closeUserModal() {
-            document.getElementById('userModal').classList.add('hidden');
+        function closeQuestionModal() {
+            const modal = document.getElementById('questionModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
         }
 
         // Delete Functions
-        function confirmDelete(userId, userName) {
-            deleteUserId = userId;
-            document.getElementById('deleteUserName').textContent = userName;
+        function confirmDelete(questionId, questionText) {
+            deleteQuestionId = questionId;
+            document.getElementById('deleteQuestionText').textContent = questionText;
             document.getElementById('deleteModal').classList.remove('hidden');
         }
 
         function closeDeleteModal() {
             document.getElementById('deleteModal').classList.add('hidden');
-            deleteUserId = null;
+            deleteQuestionId = null;
         }
 
-        function deleteUser() {
+        function deleteQuestion() {
             // Delete logic here
-            console.log('Deleting user:', deleteUserId);
+            console.log('Deleting question:', deleteQuestionId);
             closeDeleteModal();
             // Show success notification
-            alert('User berhasil dihapus!');
+            alert('Pertanyaan berhasil dihapus!');
         }
-
-        // Initialize - show dashboard by default
-        document.addEventListener('DOMContentLoaded', function() {
-            // Pastikan sidebar tertutup di mobile saat load
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-
-            // Force close sidebar on mobile
-            if (window.innerWidth < 1024) {
-                sidebar.classList.add('-translate-x-full');
-                overlay.classList.add('hidden');
-            }
-            navigateTo('dashboard');
-        });
     </script>
 </body>
 </html>

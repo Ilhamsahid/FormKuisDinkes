@@ -1,7 +1,7 @@
 <?php
 
 class Jawaban{
-    public $conn;
+    private $conn;
 
     public function __construct($conn)
     {

@@ -2,7 +2,7 @@
 namespace app\controllers;
 
 class SurveyController {
-    public static function index()
+    public function index()
     {
         global $conn;
 
@@ -19,7 +19,7 @@ class SurveyController {
         include __DIR__ . '/../view/layouts/guest.php';
     }
 
-    public static function submit()
+    public function submit()
     {
         require __DIR__ . '/../process/ProsesSubmit.php';
     }

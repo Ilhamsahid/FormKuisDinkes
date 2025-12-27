@@ -2,22 +2,52 @@
 namespace app\controllers;
 
 class AdminController {
-    public static function dashboard()
+
+    private $perPage = 10;
+
+    public function index()
     {
+        $page = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
+        $initialPage = $page[1] ?? 'dashboard';
+
         $nav = getView('components.admin.navbar');
+        $header = getView('components.admin.header');
         $sidebar = getView('components.admin.sidebar');
-        $content = getView('admin.dashboard');
+        $content = $this->getDashboard() . $this->getUsersPage() . getView('admin.questions');
+        $modal = getView('components.admin.modal-user') . getView('components.admin.delete-confirmation-modal');
 
         include __DIR__ . '/../view/layouts/admin.php';
     }
 
-    public static function login()
+    public function getDashboard()
+    {
+        return getView('admin.dashboard');
+    }
+
+    public function getUsersPage()
+    {
+        global $conn;
+
+        $respondent = new \Responden($conn);
+        $respondents = $respondent->getAllRespondent();
+
+        return getView('admin.users-page', [
+            'respondents' => $respondents
+        ]);
+    }
+
+    public function login()
     {
         require_once __DIR__ . '/../process/ProsesLogin.php';
     }
 
-    public static function logout()
+    public function logout()
     {
         require_once __DIR__ . '/../process/ProsesLogout.php';
+    }
+
+    public function addUser($path)
+    {
+        require_once __DIR__ . '/../process/ProsesUser.php';
     }
 }

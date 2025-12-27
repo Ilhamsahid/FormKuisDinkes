@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-7">
     <meta name="viewport" content="width=device-width, initial-scale=2.0">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title><?=  $title ?></title>
 </head>
 <body class="bg-gray-49">
